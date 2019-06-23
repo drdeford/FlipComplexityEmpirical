@@ -75,7 +75,7 @@ def boundary_slope(partition):
         #    e.append(x)
                     
 
-    return list(set(a+b+c))
+    return list(set(a+b+c+d))
     
 
 def annealing_cut_accept_backwards(partition):
