@@ -34,7 +34,7 @@ mu = 2.63815853
 bases = [.3,1/.3]
 base=.3
 pops=[.05,.1,.5,.9]
-ns=120
+ns=500
 
 def fixed_endpoints(partition):
     return partition.assignment[(19,0)] != partition.assignment[(20,0)] and partition.assignment[(19,39)] != partition.assignment[(20,39)]
@@ -254,7 +254,7 @@ for pop1 in pops:
                 graph.node[n]["last_flipped"]=0
                 graph.node[n]["num_flips"]=0
                
-                if n[0]==0 or n[0] == 19 or n[1] ==20 or n[1] ==-1:
+                if n[0]==0 or n[0] == 19 or n[1] ==20 or n[1] ==-19:
                     graph.node[n]["boundary_node"]=True
                     graph.node[n]["boundary_perim"]=1
     
@@ -465,10 +465,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([40,40])
+            A2 = np.zeros([20,40])
     
             for n in graph.nodes():
-                A2[n[0],n[1]] = dict(part.assignment)[n]
+                A2[n[0],n[1]+19] = dict(part.assignment)[n]
                 
                 
             plt.figure()
@@ -484,10 +484,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([40,40])
+            A2 = np.zeros([20,40])
     
             for n in graph.nodes():
-                A2[n[0],n[1]] = graph.nodes[n]["part_sum"]
+                A2[n[0],n[1]+19] = graph.nodes[n]["part_sum"]
                 
                 
             plt.figure()
@@ -522,10 +522,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([40,40])
+            A2 = np.zeros([20,40])
     
             for n in graph.nodes():
-                A2[n[0],n[1]] = graph.nodes[n]["num_flips"]
+                A2[n[0],n[1]+19] = graph.nodes[n]["num_flips"]
                 
                 
             plt.figure()
@@ -543,10 +543,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([40,40])
+            A2 = np.zeros([20,40])
     
             for n in graph.nodes():
-                A2[n[0],n[1]] = graph.nodes[n]["lognum_flips"]
+                A2[n[0],n[1]+19] = graph.nodes[n]["lognum_flips"]
                 
                 
             plt.figure()
