@@ -31,9 +31,9 @@ from gerrychain.metrics import mean_median, efficiency_gap
 
 
 mu = 2.63815853
-bases = [.3,1/.3]
+bases = [.3, .35, .379, 1/.3, 1/.35, 1/.379]
 base=.3
-pops=[.05,.1,.5,.9]
+pops=[.1,.5,.9]
 ns=500
 
 def fixed_endpoints(partition):
@@ -183,7 +183,7 @@ for pop1 in pops:
     for base in bases:
         for alignment in [2,1,0]:
 
-            m = 20
+            m = 50
             G = nx.grid_graph([m,m])
             H = nx.triangular_lattice_graph(m,2*m - 2)
             relabel = {}
