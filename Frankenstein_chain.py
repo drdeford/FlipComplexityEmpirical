@@ -34,7 +34,7 @@ mu = 2.63815853
 bases = [.3, .35, .379, 1/.3, 1/.35, 1/.379]
 base=.3
 pops=[.1,.5,.9]
-ns=500
+ns=200
 
 def fixed_endpoints(partition):
     return partition.assignment[(19,0)] != partition.assignment[(20,0)] and partition.assignment[(19,39)] != partition.assignment[(20,39)]
@@ -52,7 +52,7 @@ def boundary_condition(partition):
     return False
     
     
-def boundary_slope(partition):
+def boundary_slope(partition,m=m):
 
     a=[]
     b=[]
@@ -63,11 +63,11 @@ def boundary_slope(partition):
     for x in partition["cut_edges"]:
         if x[0][0] == 0 and x[1][0] == 0:
             a.append(x)
-        elif x[0][1] == -19 and x[1][1] == -19:
+        elif x[0][1] == -m+1 and x[1][1] == -m+1:
             b.append(x)
-        elif x[0][0] == 19 and x[1][0] == 19:
+        elif x[0][0] == m-1 and x[1][0] == m-1:
             c.append(x)
-        elif x[0][1] == 20 and x[1][1] == 20:
+        elif x[0][1] == m and x[1][1] == m:
             d.append(x)
         #elif x in [((0,1),(1,0)), ((0,38),(1,39)), ((38,0),(39,1)), ((38,39),(39,38))]:
         #    e.append(x)
@@ -191,7 +191,7 @@ for pop1 in pops:
                 relabel[x] = ( x[0] , x[1] - m + 1)
             G= nx.relabel_nodes(G, relabel)
             
-            ####Here is the Frankengraph
+            ####Here is the FRANK2engraph
             F = nx.compose(G,H)
             
             
@@ -254,7 +254,7 @@ for pop1 in pops:
                 graph.node[n]["last_flipped"]=0
                 graph.node[n]["num_flips"]=0
                
-                if n[0]==0 or n[0] == 19 or n[1] ==20 or n[1] ==-19:
+                if n[0]==0 or n[0] == m-1 or n[1] ==m or n[1] ==-m+1:
                     graph.node[n]["boundary_node"]=True
                     graph.node[n]["boundary_perim"]=1
     
@@ -348,7 +348,7 @@ for pop1 in pops:
 
             plt.figure()
             nx.draw(graph, pos = {x:x for x in graph.nodes()}, node_color = [dict(grid_partition.assignment)[x] for x in graph.nodes()] ,node_size = ns, node_shape ='s',cmap = 'tab20')
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"start.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"start.png")
             plt.close()
                      
     
@@ -435,7 +435,7 @@ for pop1 in pops:
                 plt.close()
                 """
             print("finished no", st-time.time())
-            with open("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wait.txt",'w') as wfile:
+            with open("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wait.txt",'w') as wfile:
                 wfile.write(str(sum(waits)))
 
     
@@ -454,14 +454,14 @@ for pop1 in pops:
 
             plt.figure()
             nx.draw(graph, pos = {x:x for x in graph.nodes()}, node_color = [0 for x in graph.nodes()] ,node_size = 10, edge_color = [graph[edge[0]][edge[1]]["cut_times"] for edge in graph.edges()], node_shape ='s',cmap = 'jet',width =5)
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"edges.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"edges.png")
             plt.close()
 
 
     
             plt.figure()
             nx.draw(graph, pos = {x:x for x in graph.nodes()}, node_color = [dict(part.assignment)[x] for x in graph.nodes()] ,node_size = ns, node_shape ='s',cmap = 'tab20')
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"end.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"end.png")
             plt.close()
     
     
@@ -474,13 +474,13 @@ for pop1 in pops:
             plt.figure()
             plt.imshow(A2,cmap='jet')
             plt.colorbar()
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"end2.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"end2.png")
             plt.close()
     
     
             plt.figure()
             nx.draw(graph, pos = {x:x for x in graph.nodes()}, node_color = [graph.nodes[x]["part_sum"] for x in graph.nodes()] ,node_size = ns, node_shape ='s',cmap = 'jet')
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wca.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wca.png")
             plt.close()
     
     
@@ -494,7 +494,7 @@ for pop1 in pops:
             plt.imshow(A2,cmap='jet')
             plt.colorbar()
 
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wca2.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"wca2.png")
             plt.close()
     
     
@@ -502,14 +502,14 @@ for pop1 in pops:
             plt.figure()
             plt.title("Slopes")
             plt.plot(slopes)
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"slope.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"slope.png")
             plt.close()
     
             plt.figure()
             plt.title("Angle")
             plt.plot(angles)
             plt.ylim([0,6.3])
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"angle.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"angle.png")
             plt.close()
     
     
@@ -518,7 +518,7 @@ for pop1 in pops:
             plt.title("Flips")
             nx.draw(graph,pos= {x:x for x in graph.nodes()},node_color=[graph.nodes[x]["num_flips"] for x in graph.nodes()],node_size=ns,node_shape='s',cmap="jet")
             plt.title("Flips")
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"flip.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"flip.png")
             plt.close()
     
     
@@ -531,7 +531,7 @@ for pop1 in pops:
             plt.figure()
             plt.imshow(A2,cmap='jet')
             plt.colorbar()
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"flip2.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"flip2.png")
             plt.close()
 
 
@@ -539,7 +539,7 @@ for pop1 in pops:
             plt.title("Flips")
             nx.draw(graph,pos= {x:x for x in graph.nodes()},node_color=[graph.nodes[x]["lognum_flips"] for x in graph.nodes()],node_size=ns,node_shape='s',cmap="jet")
             plt.title("Flips")
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"logflip.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"logflip.png")
             plt.close()
     
     
@@ -552,5 +552,5 @@ for pop1 in pops:
             plt.figure()
             plt.imshow(A2,cmap='jet')
             plt.colorbar()
-            plt.savefig("./plots/FRANK/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"logflip2.png")
+            plt.savefig("./plots/FRANK2/"+str(alignment)+"B"+str(int(100*base))+"P"+str(int(100*pop1))+"logflip2.png")
             plt.close()
