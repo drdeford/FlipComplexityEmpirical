@@ -467,10 +467,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([50,100])
+            A2 = np.zeros([m,2*m])
     
             for n in graph.nodes():
-                A2[n[0],n[1]+19] = dict(part.assignment)[n]
+                A2[n[0],n[1]+m-1] = dict(part.assignment)[n]
                 
                 
             plt.figure()
@@ -486,10 +486,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([50,100])
+            A2 = np.zeros([m,2*m])
     
             for n in graph.nodes():
-                A2[n[0],n[1]+19] = graph.nodes[n]["part_sum"]
+                A2[n[0],n[1]+m-1] = graph.nodes[n]["part_sum"]
                 
                 
             plt.figure()
@@ -524,10 +524,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([50,100])
+            A2 = np.zeros([m,2*m])
     
             for n in graph.nodes():
-                A2[n[0],n[1]+19] = graph.nodes[n]["num_flips"]
+                A2[n[0],n[1]+m-1] = graph.nodes[n]["num_flips"]
                 
                 
             plt.figure()
@@ -545,10 +545,10 @@ for pop1 in pops:
             plt.close()
     
     
-            A2 = np.zeros([50,100])
+            A2 = np.zeros([m,2*m])
     
             for n in graph.nodes():
-                A2[n[0],n[1]+19] = graph.nodes[n]["lognum_flips"]
+                A2[n[0],n[1]+m-1] = graph.nodes[n]["lognum_flips"]
                 
                 
             plt.figure()
