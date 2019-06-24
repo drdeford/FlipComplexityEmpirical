@@ -36,6 +36,8 @@ base=.3
 pops=[.1,.5,.9]
 ns=200
 
+m=50
+
 def fixed_endpoints(partition):
     return partition.assignment[(19,0)] != partition.assignment[(20,0)] and partition.assignment[(19,39)] != partition.assignment[(20,39)]
     
